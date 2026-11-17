@@ -5,6 +5,7 @@
     - Wing Area
     - Max Thrust
     - t_mission
+    - cost
     Output:
     - Score
 """
