@@ -1,7 +1,5 @@
 """
     Inputs:
-    - Cruise Speed
-    - Battery Power over Thrust
     - Aircraft Mass
     - CL_max
     - Wing Area
