@@ -19,7 +19,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import initializations as init
 
 # To be moved into initializations.py
-c = 1.08
+c = 1.20 # liftoff speed 20% higher than stall speed
 mu_f = 0.35 # should be reevaluated (range from 0.25 to 0.45 possible)
 e = 0.85
 
@@ -41,7 +41,8 @@ def calc_d_to(m, cl_max, wing_area, max_thrust, cd_0, AR):
                                             - (c ** 2 / 2) * (cd_0 + (cl_to ** 2) / (3 * np.pi * AR * e) - mu_f * cl_to)
                                             )
                                         )
-
+    # Simplified formula
+    # d_to = (c ** 2 * (W / wing_area)) / (init.rho * init.g * cl_max * (max_thrust / W))
     print(f"d_to = {d_to:.3f} m")
     return d_to
 
@@ -57,7 +58,7 @@ def calc_score(t_mission, cost, f_stall, f_to):
 if __name__ == "__main__":
     # Test values
     m = 2
-    cl_max = 1.5
+    cl_max = 1.3
     wing_area = 0.4
     max_thrust = 10
     cd_0 = 0.02
