@@ -12,7 +12,8 @@ Mission (RFP section 3):
 Idea: every phase uses some battery charge. Take-off, climb and cruise come
 first; whatever is left of the 70 % is used in the recon phase.
 
-All inputs come from interfaces.py. Units: SI (m, kg, s, N, W, A).
+All inputs come from the team files (aerodynamics.py, structures.py,
+propulsion.py) and overall_inputs.py. Units: SI (m, kg, s, N, W, A).
 Usage:  T_mission = mission_time(design_variables)
 """
 
@@ -22,9 +23,13 @@ import sys
 
 import numpy as np
 
-sys.path.append(os.path.join(os.path.dirname(__file__), ".."))  # repo root: initializations.py, interfaces.py
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.extend([HERE, os.path.join(HERE, "..")])  # this folder + repo root (initializations.py)
 import initializations as init
-import interfaces
+import overall_inputs
+import aerodynamics
+import propulsion
+import structures
 
 
 # ============================================================================
@@ -118,18 +123,18 @@ def mission_time(design_variables, verbose=False):
     """Simulate the whole mission and return T_mission [s]."""
     dv = design_variables
 
-    # --- inputs from the other teams (names = interfaces.py functions) ---
-    m = interfaces.aircraft_mass(dv)
-    S = interfaces.wing_area(dv)
-    CL_max = interfaces.CL_max(dv)
-    polar = interfaces.CLCD_polar(dv)
-    T_max = interfaces.max_thrust(dv)
-    battery = interfaces.battery(dv)
-    v_cruise = interfaces.cruise_speed(dv)
-    rho = interfaces.air_density(dv)
+    # --- inputs from the team files ---
+    m = structures.aircraft_mass(dv)
+    S = aerodynamics.wing_area(dv)
+    CL_max = aerodynamics.CL_max(dv)
+    polar = aerodynamics.CLCD_polar(dv)
+    T_max = propulsion.max_thrust(dv)
+    battery = propulsion.battery(dv)
+    v_cruise = overall_inputs.cruise_speed(dv)
+    rho = overall_inputs.air_density(dv)
 
     def power(T, v):                                  # battery power [W] for thrust T at speed v
-        return interfaces.battery_power_over_thrust(dv, T, v)
+        return propulsion.battery_power_over_thrust(dv, T, v)
 
     # --- fly the mission ---
     charge_budget = init.battery_use * battery[1]     # 70 % of capacity [A s]
@@ -155,7 +160,7 @@ def mission_time(design_variables, verbose=False):
 
 
 # ============================================================================
-# Test run with the placeholder values from interfaces.py
+# Test run with the placeholder values of the team files
 # ============================================================================
 if __name__ == "__main__":
-    mission_time(interfaces.DESIGN_VARIABLES_EXAMPLE, verbose=True)
+    mission_time(overall_inputs.DESIGN_VARIABLES_EXAMPLE, verbose=True)
