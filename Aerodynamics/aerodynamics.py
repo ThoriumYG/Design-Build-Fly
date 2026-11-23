@@ -37,8 +37,9 @@ import sys
 
 import numpy as np
 
-HERE = os.path.dirname(os.path.abspath(__file__))
-sys.path.extend([HERE, os.path.join(HERE, "..")])  # this folder + repo root (initializations.py)
+ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")  # repo root
+sys.path.extend([ROOT] + [os.path.join(ROOT, folder) for folder in
+                          ("Aerodynamics", "Structure", "Propulsion", "Performance")])
 import initializations as init
 import overall_inputs
 import structures
