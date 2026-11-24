@@ -20,7 +20,7 @@ import initializations as init
 
 # To be moved into initializations.py
 c = 1.20 # liftoff speed 20% higher than stall speed
-mu_f = 0.35 # should be reevaluated (range from 0.25 to 0.45 possible)
+mu_f = 0.08 # should be reevaluated (range from 0.25 to 0.45 possible)
 e = 0.85
 
 def calc_v_stall(m, cl_max, wing_area):
