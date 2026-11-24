@@ -20,6 +20,7 @@ Units: always SI (m, kg, s, N, W, V, A, rad), costs in EUR.
 
 import os
 import sys
+import numpy as np
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")  # repo root
 sys.path.extend([ROOT] + [os.path.join(ROOT, folder) for folder in
@@ -29,7 +30,7 @@ import initializations as init
 # One example aircraft. Copy it, change the numbers, pass it to any function.
 DESIGN_VARIABLES_EXAMPLE = {
     # --- flight ---
-    "cruise_speed": 14.0,       # climb + 4 cruise laps [m/s]; RFP: whole number
+    "cruise_speed": np.arange(11, 26),       # climb + 4 cruise laps [m/s]; RFP: whole number
                                 # (14.0 ok, 14.5 not allowed), >= v_stall + 3 m/s
     "max_velocity": 25.0,       # highest level-flight speed [m/s]; RFP: >= 25
     # --- wing (Aerodynamics) ---
@@ -42,11 +43,19 @@ DESIGN_VARIABLES_EXAMPLE = {
     "propeller": "APC_9x6",     # key of init.propellers (text)
 }
 
-
+'''
+# Use if cruise speed is a single value.
 def cruise_speed(design_variables):
     """Airspeed of the climb and the 4 cruise laps [m/s].
     RFP: whole number (14.0 ok, 14.5 not), at least stall speed + 3 m/s."""
     return float(design_variables.get("cruise_speed", 14.0))
+'''
+
+# Use if cruise speed is an array.
+def cruise_speed(design_variables):
+    """Airspeed of the climb and the 4 cruise laps [m/s].
+    RFP: whole number (14.0 ok, 14.5 not), at least stall speed + 3 m/s."""
+    return design_variables["cruise_speed"]
 
 
 def mission_velocity(design_variables):

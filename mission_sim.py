@@ -41,25 +41,35 @@ def mission_sim(design_variables, verbose=False):
 
     # Takeoff
     t_to, d_to, q_to = phases.takeoff(m, S, CL_max, T_max, polar, battery)
-    # Climb
-    t_cl, q_cl = phases.climb(m, S, v_cruise, polar, battery, power)
-    # Cruise
-    t_cr, q_cr = phases.cruise(m, S, v_cruise, polar, battery, power)
 
-    # Check if enough charge available before going into reconnaissance
-    charge_left = charge_budget - (q_to + q_cl + q_cr)
-    if charge_left <= 0:                              # 70 % used before the recon starts
-        T_mission, q_re = 0.0, 0.0                    # -> design not valid
-    else:
-        # Reconnaissance
-        T_mission, q_re = phases.recon(m, S, charge_left, polar, battery, power)
+    # Loop through all cruise speeds
+    max_T_mission = 0
+    v_cruise_max_T = 0
+    for v_c in v_cruise:
+        # Climb
+        t_cl, q_cl = phases.climb(m, S, v_c, polar, battery, power)
+        # Cruise
+        t_cr, q_cr = phases.cruise(m, S, v_c, polar, battery, power)
 
+        # Check if enough charge available before going into reconnaissance
+        charge_left = charge_budget - (q_to + q_cl + q_cr)
+        if charge_left <= 0:                              # 70 % used before the recon starts
+            T_mission, q_re = 0.0, 0.0                    # -> design not valid
+        else:
+            # Reconnaissance
+            T_mission, q_re = phases.recon(m, S, charge_left, polar, battery, power)
+
+        # Store highest mission time and corresponding cruise velocity
+        if T_mission > max_T_mission:
+            max_T_mission = T_mission
+            v_cruise_max_T = v_c
+    
     if verbose:
         print(f"{'phase':<10}{'time [s]':>10}{'charge [mAh]':>14}")
         for name, t, q in [("take-off", t_to, q_to), ("climb", t_cl, q_cl),
-                           ("cruise", t_cr, q_cr), ("recon", T_mission, q_re)]:
+                           ("cruise", t_cr, q_cr), ("recon", max_T_mission, q_re)]:
             print(f"{name:<10}{t:10.1f}{q / 3.6:14.0f}")
-        print(f"T_mission = {T_mission:.0f} s ({T_mission / 60:.1f} min)")
+        print(f"T_mission = {max_T_mission:.0f} s ({max_T_mission / 60:.1f} min) at v_cruise = {v_cruise_max_T} m/s")
 
     return T_mission, d_to
 
