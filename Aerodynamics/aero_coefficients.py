@@ -61,6 +61,45 @@ def zero_lift_drag(wing_obj):
     return (cd0_fus + cd0_wing)
 
 
+def c_one(x):
+    return -0.0000264 * x**3 - 0.000564 * x**2 + 0.0556219 * x - 0.0054559
+def c_two(x):
+    return 0.000003 * x**5 - 0.000094 * x**4 + 0.0010118 * x**3 - 0.0015527 * x**2 - 0.1042267 * x + 1.001183
+def c_three(x):
+    return -0.0000506 * x**3 - 0.0007669 * x**2 + 0.0490423 * x - 0.002549
+def c_four(x):
+    return 0.0000034 * x**4 - 0.0000064 * x**3 - 0.0037242 * x**2 + 0.0913507 * x + 0.0008776
+
+def cl_a(wing_obj):
+    '''
+    # Airfoil trailing edge angle here is assumed to be zero and thus now set to 0. If more complicated geometries are evaluated, please change the parameter accfordingly.
+    phi_TE_dash = 0
+    M = initializations.v_recon/initializations.a0
+    beta = np.sqrt(1-M**2) # For subsonic conditions
+    t_c = int(wing_obj.NACA[-2:])/100
+    cl_a_theory = 2 * np.pi + 4.7 * t_c * (1 + 0.00375 * 0)
+    cl_a_i = 0 # cl_a_i: experimental lift curve slope
+    cla_a = 1.05/beta * (cl_a_i/cl_a_theory) * cl_a_theory
+    '''
+    return 6.1 # in 1/rad; exact data from airfoil not available; 0.1 < t_c < 0.2
+
+# lift distribution at a given normalized spanwise wing coordinate
+def gamma_tot(eta, wing_obj, cl=1):
+    M = initializations.v_recon/initializations.a0
+    beta = np.sqrt(1-M**2) # For subsonic conditions
+    # l_a implemented for the condition of an unswept wing 
+    # Assuming that for x in the coefficient formulas, the plan view parameter F is to be inserted
+    F = 2 * np.pi * wing_obj.aspect_ratio() / (cl_a(wing_obj) * 1) # cos(phi25) = 1 for sweep of 25%-line = 0
+    l_a = c_one(F) * wing_obj.chord(eta)/wing_obj.cmac + (c_two(F) + c_three(F)) * 4/np.pi * np.sqrt(1 - eta**2)
+    gamma_a = l_a * cl
+    # Again, phi_beta (effective sweep angle) assumed zero
+    E = 1 + (2 * wing_obj.taper_ratio) / (wing_obj.aspect_ratio() * (1 + wing_obj.taper_ratio))
+    alpha_01 = -(c_one(F) * (1 + 2 * wing_obj.taper_ratio)/(3 * (1 + wing_obj.taper_ratio)) + (c_two(F) + c_three(F)) * 4 / 3 * np.pi)# unswept wing
+    l_b = l_a * c_four(F) * 1 * (wing_obj.tip_twist + alpha_01) * beta * E # assuming alpha_01 = 0
+    gamma_b = l_b * wing_obj.tip_twist * cl_a(wing_obj) / E
+
+    return gamma_a + gamma_b
+
 if __name__ == '__main__':
 
     # Create Wing and Tail
@@ -75,3 +114,13 @@ if __name__ == '__main__':
     k = induced_drag_co(wing)
 
     print("cd0 = ", cd0tot, "and CL_alpha = ", clalpha, "and induced drag coefficient k = ", k)
+    import matplotlib.pyplot as plt
+    # Try to check the lift distribution function
+    eta = np.linspace(0, 1, 100)
+    #etaw = eta*wing.wing_span
+    #etav = eta*vtail.wing_span
+    plt.plot(eta, gamma_tot(eta, wing))
+    plt.plot(eta, gamma_tot(eta, wing, 0.5))
+    plt.plot(eta, gamma_tot(eta, wing, 1.5))
+    plt.plot(eta, gamma_tot(eta, vtail))
+    plt.show()
