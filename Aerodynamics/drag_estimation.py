@@ -72,7 +72,7 @@ def zero_lift_drag_coefficient_empennage(S_HT, S_VT, Cd_emp = 0.007):
     return Cd_emp * (S_HT + S_VT)
 #print(zero_lift_drag_coefficient_empennage(31, 21.5))
 # No nacelle
-def zero_lift_drag_coefficient_empennage_total(rho, V, f_fus, f_w, f_emp, f_nac = 0, f_interference = 0):
+def zero_lift_drag_coefficient_total(rho, V, f_fus, f_w, f_emp, f_nac = 0, f_interference = 0):
     f = f_fus + f_w + f_emp + f_nac + f_interference
     return 0.5 * rho * V ** 2 * f
 
