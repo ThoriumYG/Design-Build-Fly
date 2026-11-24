@@ -39,14 +39,19 @@ def mission_sim(design_variables, verbose=False):
     # Mission
     charge_budget = init.battery_use * battery[1]     # 70 % of capacity [A s]
 
+    # Takeoff
     t_to, d_to, q_to = phases.takeoff(m, S, CL_max, T_max, polar, battery)
+    # Climb
     t_cl, q_cl = phases.climb(m, S, v_cruise, polar, battery, power)
+    # Cruise
     t_cr, q_cr = phases.cruise(m, S, v_cruise, polar, battery, power)
 
+    # Check if enough charge available before going into reconnaissance
     charge_left = charge_budget - (q_to + q_cl + q_cr)
     if charge_left <= 0:                              # 70 % used before the recon starts
         T_mission, q_re = 0.0, 0.0                    # -> design not valid
     else:
+        # Reconnaissance
         T_mission, q_re = phases.recon(m, S, charge_left, polar, rho, battery, power)
 
     if verbose:
