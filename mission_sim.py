@@ -19,7 +19,7 @@ from Structure import structures
 from Propulsion import propulsion
 import initializations as init
 
-def mission_time(design_variables, verbose=False):
+def mission_sim(design_variables, verbose=False):
     """Simulate the whole mission and return T_mission [s]."""
     dv = design_variables
 
@@ -56,9 +56,9 @@ def mission_time(design_variables, verbose=False):
             print(f"{name:<10}{t:10.1f}{q / 3.6:14.0f}")
         print(f"T_mission = {T_mission:.0f} s ({T_mission / 60:.1f} min)")
 
-    return T_mission
+    return T_mission, d_to
 
 
 # Test run with the placeholder values of the team files
 if __name__ == "__main__":
-    mission_time(overall_inputs.DESIGN_VARIABLES_EXAMPLE, verbose=True)
+    mission_sim(overall_inputs.DESIGN_VARIABLES_EXAMPLE, verbose=True)
