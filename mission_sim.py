@@ -52,7 +52,7 @@ def mission_sim(design_variables, verbose=False):
         T_mission, q_re = 0.0, 0.0                    # -> design not valid
     else:
         # Reconnaissance
-        T_mission, q_re = phases.recon(m, S, charge_left, polar, rho, battery, power)
+        T_mission, q_re = phases.recon(m, S, charge_left, polar, battery, power)
 
     if verbose:
         print(f"{'phase':<10}{'time [s]':>10}{'charge [mAh]':>14}")

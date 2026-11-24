@@ -1,7 +1,7 @@
 """
-takeoff.py
+mission_phases.py
 
-Calculates takeoff distance and energy/charge consumed during takeoff.
+Calculates mission phases and charge consumed during.
 """
 import numpy as np
 import math
@@ -73,39 +73,23 @@ def pattern_lap(m, S, v, straight, radius, polar, battery, power):
     n = helpers.turn_load_factor(v, radius)
     t_turn = 2 * math.pi * radius / v
     I_turn = helpers.battery_current(power(helpers.drag_force(m, S, v, polar, init.rho, n), v), battery)
-    return t_straight + t_turn, I_straight * t_straight + I_turn * t_turn
+    t = t_straight + t_turn
+    Q = I_straight * t_straight + I_turn * t_turn
+    return t, Q
 
 
 def cruise(m, S, v, polar, battery, power):
     """4 laps of the cruise pattern (4 * 891 m = 3565 m, RFP: approx. 3570 m)."""
     t_lap, q_lap = pattern_lap(m, S, v, init.l_cruise_straight, init.r_cruise_turn,
                                polar, battery, power)
-    return init.n_laps * t_lap, init.n_laps * q_lap
+    t = init.n_laps * t_lap
+    Q = init.n_laps * q_lap
+    return t, Q
 
 
-def recon(m, S, charge_left, polar, rho, battery, power):
+def recon(m, S, charge_left, polar, battery, power):
     """Fly the recon pattern at 20 m/s until the remaining charge is used."""
     t_lap, q_lap = pattern_lap(m, S, init.v_recon, init.l_recon_straight,
                                init.r_recon_turn, polar, battery, power)
     t = charge_left / (q_lap / t_lap)                 # remaining charge / average current
     return t, charge_left
-
-
-if __name__ == "__main__":
-    # Test data
-    m = 2
-    S = 0.4
-    v_cruise = 14
-    CL_max = 1.3
-    AR = 7
-    polar = np.array([
-    # CL
-    [-0.4, -0.3, -0.2, -0.1, 0.0, 0.1, 0.2, 0.3, 0.4, 0.5,
-      0.6,  0.7,  0.8,  0.9, 1.0, 1.1, 1.2, 1.3, 1.4],
-    # CD
-    [0.0505, 0.0442, 0.0391, 0.0351, 0.0323, 0.0306, 0.0300, 0.0306, 0.0323, 0.0351,
-     0.0391, 0.0442, 0.0505, 0.0579, 0.0664, 0.0760, 0.0869, 0.1098, 0.1519],
-    ])
-
-    print(takeoff(m, S, CL_max, AR, polar))
-    print(climb(m, S, v_cruise, polar))
