@@ -1,4 +1,8 @@
+import xml.etree.ElementTree as ET
+from copy import deepcopy as dc
+
 import numpy as np
+import pandas as pd
 from scipy.integrate import quad
 
 
@@ -10,27 +14,30 @@ def superellipse_tapered(ellipticity, root_chord, half_span, taper_ratio, coordi
     return l
 
 
-""" def y_positions(n_panels,spacing_parameter=-1.5, ):
+def y_positions(
+    n_panels,
+    spacing_parameter=-1.5,
+):
     pabs = abs(spacing_parameter)
     if pabs < 1:
-        pequ = 1. - pabs
+        pequ = 1.0 - pabs
         pcos = pabs
-        psin = 0.
+        psin = 0.0
     elif pabs < 2:
-        pequ = 0.
-        pcos = 2. - pabs
-        psin = pabs - 1.
+        pequ = 0.0
+        pcos = 2.0 - pabs
+        psin = pabs - 1.0
     else:
-        pequ = pabs - 2.
+        pequ = pabs - 2.0
         pcos = 0
-        psin = 3. - pabs
-    frac = np.linspace(0, 1., n_panels + 1)
+        psin = 3.0 - pabs
+    frac = np.linspace(0, 1.0, n_panels + 1)
     theta = np.pi * frac
     if spacing_parameter > 0:
-        y = (pequ * frac + pcos * (1. - np.cos(theta)) / 2. + psin * (1. - np.cos(theta / 2.)))
+        y = pequ * frac + pcos * (1.0 - np.cos(theta)) / 2.0 + psin * (1.0 - np.cos(theta / 2.0))
     else:
-        y = (pequ * frac + pcos * (1. - np.cos(theta)) / 2. + psin * (np.sin(theta / 2.)))
-    return y """
+        y = pequ * frac + pcos * (1.0 - np.cos(theta)) / 2.0 + psin * (np.sin(theta / 2.0))
+    return y
 
 
 class WingObject:
@@ -86,8 +93,8 @@ class WingObject:
             / (1 + self.taper_ratio)
         )
 
-        """ self.table = pd.DataFrame()
-        self.create_table() """
+        self.table = pd.DataFrame()
+        self.create_table()
 
     def dihedral_rad(self):
         return np.deg2rad(self.dihedral)
@@ -105,81 +112,84 @@ class WingObject:
     def aspect_ratio(self):
         return self.wing_span**2 / self.area()
 
-    """ def create_table(self):
-        y = y_positions(self.n_panels,) * self.projected_half_span
+    def create_table(self):
+        y = (
+            y_positions(
+                self.n_panels,
+            )
+            * self.projected_half_span
+        )
         l = superellipse_tapered(
             ellipticity=self.ellipticity,
             root_chord=self.root_chord,
             half_span=self.projected_half_span,
             taper_ratio=self.taper_ratio,
-            coordinate=y
+            coordinate=y,
         )
         z = y * np.tan(self.dihedral_rad())
         twist = self.tip_twist * y / self.projected_half_span
         x = (self.root_chord - l) * self.spar_position
         dct = {
-            'x_offset': x,
-            'y_offset': y,
-            'z_offset': z,
-            'chord_length': l,
-            'twist': twist,
+            "x_offset": x,
+            "y_offset": y,
+            "z_offset": z,
+            "chord_length": l,
+            "twist": twist,
         }
         self.table = pd.DataFrame.from_dict(dct)
 
-        pass """
-
-    """ def to_XFLR5(self):
+    def to_XFLR5(self):
 
         explane = ET.Element("explane", attrib={"version": "1.0"})
         units = ET.SubElement(explane, "Units")
-        for unit in ('length_unit_to_meter', 'mass_unit_to_kg'):
+        for unit in ("length_unit_to_meter", "mass_unit_to_kg"):
             ET.SubElement(units, unit).text = "1"
 
         wing = ET.SubElement(explane, "wing")
-        ET.SubElement(wing, "Name").text=self.name
+        ET.SubElement(wing, "Name").text = self.name
         if self.vtp:
-            ET.SubElement(wing, "isFin").text="true"
+            ET.SubElement(wing, "isFin").text = "true"
         sections = ET.SubElement(wing, "Sections")
         prev_row = {
-            'x_offset': 0,
-            'y_offset': 0,
-            'z_offset': 0,
+            "x_offset": 0,
+            "y_offset": 0,
+            "z_offset": 0,
         }
         y = 0
         for _, row in self.table.iterrows():
 
-            y += np.linalg.norm((
-                # row['x_offset']-prev_row['x_offset'],
-                row['y_offset']-prev_row['y_offset'],
-                row['z_offset']-prev_row['z_offset'],
-            ))
+            y += np.linalg.norm(
+                (
+                    # row['x_offset']-prev_row['x_offset'],
+                    row["y_offset"] - prev_row["y_offset"],
+                    row["z_offset"] - prev_row["z_offset"],
+                )
+            )
             prev_row = dc(row)
             dct = {
-                'y_position': y,
-                'Chord': row['chord_length'],
-                'xOffset': row['x_offset'],
-                'Dihedral': self.dihedral,
-                'Twist': row['twist'],
-                'x_number_of_panels': self.x_panels,
-                'x_panel_distribution': 'COSINE',
-                'y_number_of_panels': 1,
-                'y_panel_distribution': 'UNIFORM',
-                'Left_Side_FoilName': f'NACA {self.NACA}',
-                'Right_Side_FoilName': f'NACA {self.NACA}',
+                "y_position": y,
+                "Chord": row["chord_length"],
+                "xOffset": row["x_offset"],
+                "Dihedral": self.dihedral,
+                "Twist": row["twist"],
+                "x_number_of_panels": self.x_panels,
+                "x_panel_distribution": "COSINE",
+                "y_number_of_panels": 1,
+                "y_panel_distribution": "UNIFORM",
+                "Left_Side_FoilName": f"NACA {self.NACA}",
+                "Right_Side_FoilName": f"NACA {self.NACA}",
             }
             section = ET.SubElement(sections, "Section")
             for key, value in dct.items():
                 if isinstance(value, (str, int)):
                     value = str(value)
                 elif isinstance(value, float):
-                    value = f'{np.round(value,6):.6f}'
+                    value = f"{np.round(value,6):.6f}"
 
-                ET.SubElement(section, key).text =  str(value)
+                ET.SubElement(section, key).text = str(value)
 
-            pass
-
-        ET.indent(explane, space=' ' * 3)
-        ET.ElementTree(explane).write(f"{self.name}.xml", encoding="utf-8", xml_declaration=True) """
+        ET.indent(explane, space=" " * 3)
+        ET.ElementTree(explane).write(f"{self.name}.xml", encoding="utf-8", xml_declaration=True)
 
 
 class Wing(WingObject):
