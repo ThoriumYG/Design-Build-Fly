@@ -78,7 +78,7 @@ def mission_sim(design_variables, verbose=False):
             f"T_mission = {max_T_mission:.0f} s ({max_T_mission / 60:.1f} min) at v_cruise = {v_cruise_max_T} m/s"
         )
 
-    return T_mission, d_to
+    return max_T_mission, d_to
 
 
 # Test run with the placeholder values of the team files
