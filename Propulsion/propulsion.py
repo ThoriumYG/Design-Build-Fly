@@ -56,15 +56,13 @@ def max_thrust(design_variables):
     return 12.0
 
 
-POWERTRAIN_EFFICIENCY_PLACEHOLDER = 0.55  # Miro note: constant for now (lecture 50-70 %)
-
-
 def battery_power_over_thrust(design_variables, T, v):
     """Electrical power the battery must deliver for thrust T [N] at airspeed
     v [m/s]. Returns float [W]. Used by: Performance in every phase.
     Status: PLACEHOLDER P = T v / 0.55 (constant efficiency).
     Later: solve the chain propeller -> motor -> ESC for this T and v."""
-    return T * v / POWERTRAIN_EFFICIENCY_PLACEHOLDER
+    powertrain_efficiency_placeholder = 0.55  # Miro note: constant for now (lecture 50-70 %)
+    return T * v / powertrain_efficiency_placeholder
 
 
 def battery(design_variables):
@@ -85,8 +83,10 @@ def propulsion_weight(design_variables):
 def total_component_cost(design_variables):
     """Price of all BOUGHT components (fixed RFP parts + motor, propeller,
     battery, gear, CFRP rods ...)  [EUR]. Printing cost NOT included
-    (score_calculation adds it from structures.printing_time()).  TODO."""
-    raise NotImplementedError("Propulsion: total_component_cost")
+    (score_calculation adds it from structures.printing_time()).
+    Status: PLACEHOLDER (500 EUR). Later: sum of the component costs."""
+    total_component_cost_placeholder = 500.0  # [EUR], first rough estimate
+    return total_component_cost_placeholder
 
 
 # ============================================================================
