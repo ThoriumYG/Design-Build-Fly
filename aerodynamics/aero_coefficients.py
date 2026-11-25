@@ -35,7 +35,8 @@ def induced_drag_co(wing_obj):
 
 
 def zero_lift_drag(wing_obj, tail_obj):
-    Re = initializations.v_recon * wing_obj.root_chord / initializations.nu
+    # Re not used yet; kept for later use by the Aerodynamics team
+    Re = initializations.v_recon * wing_obj.root_chord / initializations.nu  # noqa: F841
     rho = initializations.rho
     v_recon = initializations.v_recon
     mu = initializations.mu
