@@ -20,7 +20,7 @@ def superellipse_tapered(ellipticity, root_chord, half_span, taper_ratio, coordi
     return l
 
 
-""" def y_positions(n_panels,spacing_parameter=-1.5, ):
+def y_positions(n_panels,spacing_parameter=-1.5, ):
     pabs = abs(spacing_parameter)
     if pabs < 1:
         pequ = 1. - pabs
@@ -40,7 +40,7 @@ def superellipse_tapered(ellipticity, root_chord, half_span, taper_ratio, coordi
         y = (pequ * frac + pcos * (1. - np.cos(theta)) / 2. + psin * (1. - np.cos(theta / 2.)))
     else:
         y = (pequ * frac + pcos * (1. - np.cos(theta)) / 2. + psin * (np.sin(theta / 2.)))
-    return y """
+    return y
 
 
 class WingObject(object):
@@ -86,8 +86,8 @@ class WingObject(object):
 
         self.cmac = 2/3 * self.root_chord *(1+self.taper_ratio+self.taper_ratio**2)/(1+self.taper_ratio)
 
-        """ self.table = pd.DataFrame()
-        self.create_table() """
+        self.table = pd.DataFrame()
+        self.create_table()
 
 
     def dihedral_rad(self):
@@ -108,7 +108,7 @@ class WingObject(object):
 
 
 
-    """ def create_table(self):
+    def create_table(self):
         y = y_positions(self.n_panels,) * self.projected_half_span
         l = superellipse_tapered(
             ellipticity=self.ellipticity,
@@ -129,9 +129,9 @@ class WingObject(object):
         }
         self.table = pd.DataFrame.from_dict(dct)
 
-        pass """
+        pass
 
-    """ def to_XFLR5(self):
+    def to_XFLR5(self):
 
         explane = ET.Element("explane", attrib={"version": "1.0"})
         units = ET.SubElement(explane, "Units")
@@ -182,7 +182,7 @@ class WingObject(object):
             pass
 
         ET.indent(explane, space=' ' * 3)
-        ET.ElementTree(explane).write(f"{self.name}.xml", encoding="utf-8", xml_declaration=True) """
+        ET.ElementTree(explane).write(f"{self.name}.xml", encoding="utf-8", xml_declaration=True)
 
 
 class Wing(WingObject):
