@@ -1,0 +1,47 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "design-build-fly"
+version = "0.1.0"
+description = "TUM Design/Build/Fly WS 2026/27 analysis and mission simulation"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "numpy>=2.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.7",
+    "black>=24.0",
+    "mypy>=1.11",
+]
+
+[tool.setuptools]
+packages = ["Aerodynamics", "Performance", "Propulsion", "Structure"]
+py-modules = ["initializations", "overall_inputs"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+exclude = [
+    ".venv",
+    "__pycache__",
+]
+
+[tool.black]
+line-length = 100
+target-version = ["py311"]
+
+[tool.mypy]
+python_version = "3.11"
+ignore_missing_imports = true
+warn_unused_ignores = true
+warn_redundant_casts = true

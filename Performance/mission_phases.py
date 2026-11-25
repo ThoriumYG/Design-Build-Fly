@@ -10,7 +10,7 @@ import math
 import sys
 import os
 
-import helpers
+from Performance import helpers
 
 # Go up one level from the subfolder to the main folder
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))

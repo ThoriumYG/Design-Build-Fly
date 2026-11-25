@@ -47,7 +47,7 @@ sys.path.extend(
 )
 import initializations as init
 import overall_inputs
-import structures
+from Structure import structures
 
 
 # ============================================================================

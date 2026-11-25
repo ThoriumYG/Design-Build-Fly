@@ -11,9 +11,9 @@ Output:
 """
 
 import numpy as np
-import mission_sim as msim
+from Performance import mission_sim as msim
 import initializations as init
-from Performance import overall_inputs
+import overall_inputs
 
 """
 def calc_d_to(m, cl_max, wing_area, max_thrust, cd_0, AR):

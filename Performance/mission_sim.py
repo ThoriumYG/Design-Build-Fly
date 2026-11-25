@@ -13,7 +13,7 @@ Simulates the mission for a given configuration and returns T_mission.
 6. Return T_mission.
 """
 
-from Performance import overall_inputs
+import overall_inputs
 from Performance import mission_phases as phases
 from Aerodynamics import aerodynamics
 from Structure import structures
@@ -33,7 +33,6 @@ def mission_sim(design_variables, verbose=False):
     T_max = propulsion.max_thrust(dv)
     battery = propulsion.battery(dv)
     v_cruise = overall_inputs.cruise_speed(dv)
-    rho = overall_inputs.air_density(dv)
 
     def power(T, v):  # battery power [W] for thrust T at speed v
         return propulsion.battery_power_over_thrust(dv, T, v)

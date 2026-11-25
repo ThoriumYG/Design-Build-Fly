@@ -1,0 +1,23 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run score_calculation (module)",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "Performance.score_calculation",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "justMyCode": true
+    },
+    {
+      "name": "Run mission_sim (module)",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "Performance.mission_sim",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "justMyCode": true
+    }
+  ]
+}
