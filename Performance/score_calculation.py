@@ -13,7 +13,6 @@ Output:
 import numpy as np
 from Performance import mission_sim as msim
 import initializations as init
-import overall_inputs
 
 """
 def calc_d_to(m, cl_max, wing_area, max_thrust, cd_0, AR):
@@ -49,7 +48,9 @@ def calc_score(t_mission, cost, v_stall, d_to, verbose=False):
 
 # Test run with the placeholder values of the team files
 if __name__ == "__main__":
-    T_mission, d_to = msim.mission_sim(overall_inputs.DESIGN_VARIABLES_EXAMPLE, verbose=True)
+    from Analysis_and_Optimization.baseline_design import BASELINE_DESIGN
+
+    T_mission, d_to = msim.mission_sim(BASELINE_DESIGN, verbose=True)
     cost = 500
     v_stall = 8
     calc_score(T_mission, cost, v_stall, d_to, verbose=True)

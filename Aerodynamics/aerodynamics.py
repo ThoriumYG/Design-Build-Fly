@@ -18,7 +18,8 @@ WHAT WE NEED FROM OTHER TEAMS (call these, never copy numbers)
 --------------------------------------------------------------
   structures.aircraft_mass(design_variables)   [kg]   -> needed CL in flight
   structures.CG_position(design_variables)     [m]    -> static margin
-  overall_inputs.mission_velocity / max_velocity / air_density
+  init.v_recon, init.rho                       fixed RFP / environment values
+  design_variables["max_velocity"]             [m/s]  max-speed load case
 
 WHAT WE GIVE TO OTHER TEAMS (Part A)
 ------------------------------------
@@ -49,7 +50,6 @@ sys.path.extend(
     ]
 )
 import initializations as init
-import overall_inputs
 from Structure import structures
 
 

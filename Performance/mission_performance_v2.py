@@ -13,7 +13,7 @@ Idea: every phase uses some battery charge. Take-off, climb and cruise come
 first; whatever is left of the 70 % is used in the recon phase.
 
 All inputs come from the team files (aerodynamics.py, structures.py,
-propulsion.py) and overall_inputs.py. Units: SI (m, kg, s, N, W, A).
+propulsion.py) and the design_variables. Units: SI (m, kg, s, N, W, A).
 Usage:  T_mission = mission_time(design_variables)
 """
 
@@ -32,7 +32,6 @@ sys.path.extend(
     ]
 )
 import initializations as init
-import overall_inputs
 import aerodynamics
 import propulsion
 import structures
@@ -138,8 +137,8 @@ def mission_time(design_variables, verbose=False):
     polar = aerodynamics.CLCD_polar(dv)
     T_max = propulsion.max_thrust(dv)
     battery = propulsion.battery(dv)
-    v_cruise = overall_inputs.cruise_speed(dv)
-    rho = overall_inputs.air_density(dv)
+    v_cruise = dv["cruise_speed"]
+    rho = init.rho
 
     def power(T, v):  # battery power [W] for thrust T at speed v
         return propulsion.battery_power_over_thrust(dv, T, v)
@@ -175,4 +174,6 @@ def mission_time(design_variables, verbose=False):
 # Test run with the placeholder values of the team files
 # ============================================================================
 if __name__ == "__main__":
-    mission_time(overall_inputs.DESIGN_VARIABLES_EXAMPLE, verbose=True)
+    from Analysis_and_Optimization.baseline_design import BASELINE_DESIGN
+
+    mission_time(BASELINE_DESIGN, verbose=True)

@@ -4,7 +4,7 @@ project (run with `python -m pytest` from the repo root). Replace or extend
 them with real checks once the team functions are implemented.
 """
 
-import overall_inputs
+from Analysis_and_Optimization.baseline_design import BASELINE_DESIGN
 from Performance import mission_sim
 from Performance.score_calculation import calc_score
 
@@ -22,6 +22,6 @@ def test_calc_score_decreases_with_higher_cost():
 
 
 def test_mission_sim_returns_positive_takeoff_distance():
-    t_mission, d_to = mission_sim.mission_sim(overall_inputs.DESIGN_VARIABLES_EXAMPLE)
+    t_mission, d_to = mission_sim.mission_sim(BASELINE_DESIGN)
     assert t_mission >= 0.0
     assert d_to > 0.0

@@ -2,7 +2,7 @@
 wingspan_analysis.py
 
 Sweeps the wing span and computes the mission score for each value.
-All other design variables are taken from overall_inputs.DESIGN_VARIABLES_EXAMPLE.
+All other design variables are taken from BASELINE_DESIGN.
 
 Run from the repo root:
     python -m Analysis_and_Optimization.wingspan_analysis
@@ -11,8 +11,8 @@ Run from the repo root:
 import matplotlib.pyplot as plt
 import numpy as np
 
-import overall_inputs
 from Aerodynamics import aerodynamics
+from Analysis_and_Optimization.baseline_design import BASELINE_DESIGN
 from Performance import mission_sim as msim
 from Performance.score_calculation import calc_score
 from Propulsion import propulsion
@@ -27,7 +27,7 @@ def wingspan_analysis(spans=None, base_design_variables=None, verbose=False):
     if spans is None:
         spans = np.round(np.arange(1.0, 2.0 + 1e-9, 0.1), 2)  # 1.0 ... 2.0 m
     if base_design_variables is None:
-        base_design_variables = overall_inputs.DESIGN_VARIABLES_EXAMPLE
+        base_design_variables = BASELINE_DESIGN
 
     scores = np.zeros(len(spans))
     for i, span in enumerate(spans):

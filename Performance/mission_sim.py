@@ -13,7 +13,6 @@ Simulates the mission for a given configuration and returns T_mission.
 6. Return T_mission.
 """
 
-import overall_inputs
 from Performance import mission_phases as phases
 from Aerodynamics import aerodynamics
 from Structure import structures
@@ -32,7 +31,7 @@ def mission_sim(design_variables, verbose=False):
     polar = aerodynamics.CLCD_polar(dv)
     T_max = propulsion.max_thrust(dv)
     battery = propulsion.battery(dv)
-    v_cruise = overall_inputs.cruise_speed(dv)
+    v_cruise = dv["cruise_speed"]  # array of cruise speeds to try [m/s]
 
     def power(T, v):  # battery power [W] for thrust T at speed v
         return propulsion.battery_power_over_thrust(dv, T, v)
@@ -83,4 +82,6 @@ def mission_sim(design_variables, verbose=False):
 
 # Test run with the placeholder values of the team files
 if __name__ == "__main__":
-    mission_sim(overall_inputs.DESIGN_VARIABLES_EXAMPLE, verbose=True)
+    from Analysis_and_Optimization.baseline_design import BASELINE_DESIGN
+
+    mission_sim(BASELINE_DESIGN, verbose=True)
