@@ -35,7 +35,10 @@ import math
 import os
 import sys
 
-import numpy as np
+try:
+    import numpy as np
+except ImportError:
+    np = None
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")  # repo root
 sys.path.extend(
@@ -75,8 +78,12 @@ def CLCD_polar(design_variables):
     Status: PLACEHOLDER parabolic polar. Later: aircraft_polar()."""
     S = wing_area(design_variables)
     AR = aspect_ratio(wing_planform(design_variables)["wing_span"], S)
-    CL_values = np.linspace(0.0, CL_max(design_variables), 61)
-    CD_values = 0.030 + induced_drag_coefficient(CL_values, AR, e=0.80)
+    cl_max = CL_max(design_variables)
+    CL_values = [i * cl_max / 60.0 for i in range(61)]
+    CD_values = [0.030 + induced_drag_coefficient(cl, AR, e=0.80) for cl in CL_values]
+    if np is not None:
+        CL_values = np.array(CL_values)
+        CD_values = np.array(CD_values)
     return CL_values, CD_values
 
 
