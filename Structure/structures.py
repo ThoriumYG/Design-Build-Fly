@@ -37,8 +37,13 @@ import sys
 import numpy as np
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")  # repo root
-sys.path.extend([ROOT] + [os.path.join(ROOT, folder) for folder in
-                          ("Aerodynamics", "Structure", "Propulsion", "Performance")])
+sys.path.extend(
+    [ROOT]
+    + [
+        os.path.join(ROOT, folder)
+        for folder in ("Aerodynamics", "Structure", "Propulsion", "Performance")
+    ]
+)
 import initializations as init
 import aerodynamics
 import propulsion
@@ -112,7 +117,7 @@ def shear_and_bending(y, lift_per_span, load_factor=init.n_z):
     dy = np.diff(y)
     Q = np.zeros_like(y)
     M = np.zeros_like(y)
-    for i in range(len(y) - 2, -1, -1):       # tip -> root, trapezoid rule
+    for i in range(len(y) - 2, -1, -1):  # tip -> root, trapezoid rule
         Q[i] = Q[i + 1] + 0.5 * (load[i] + load[i + 1]) * dy[i]
         M[i] = M[i + 1] + 0.5 * (Q[i] + Q[i + 1]) * dy[i]
     return Q, M

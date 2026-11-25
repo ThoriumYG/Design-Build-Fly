@@ -36,8 +36,13 @@ import os
 import sys
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")  # repo root
-sys.path.extend([ROOT] + [os.path.join(ROOT, folder) for folder in
-                          ("Aerodynamics", "Structure", "Propulsion", "Performance")])
+sys.path.extend(
+    [ROOT]
+    + [
+        os.path.join(ROOT, folder)
+        for folder in ("Aerodynamics", "Structure", "Propulsion", "Performance")
+    ]
+)
 import initializations as init
 
 
@@ -51,7 +56,7 @@ def max_thrust(design_variables):
     return 12.0
 
 
-POWERTRAIN_EFFICIENCY_PLACEHOLDER = 0.55   # Miro note: constant for now (lecture 50-70 %)
+POWERTRAIN_EFFICIENCY_PLACEHOLDER = 0.55  # Miro note: constant for now (lecture 50-70 %)
 
 
 def battery_power_over_thrust(design_variables, T, v):

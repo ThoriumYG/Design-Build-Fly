@@ -23,24 +23,29 @@ import sys
 import numpy as np
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")  # repo root
-sys.path.extend([ROOT] + [os.path.join(ROOT, folder) for folder in
-                          ("Aerodynamics", "Structure", "Propulsion", "Performance")])
+sys.path.extend(
+    [ROOT]
+    + [
+        os.path.join(ROOT, folder)
+        for folder in ("Aerodynamics", "Structure", "Propulsion", "Performance")
+    ]
+)
 import initializations as init
 
 # One example aircraft. Copy it, change the numbers, pass it to any function.
 DESIGN_VARIABLES_EXAMPLE = {
     # --- flight ---
-    "cruise_speed": np.arange(11, 26),       # climb + 4 cruise laps [m/s]; RFP: whole number
-                                # (14.0 ok, 14.5 not allowed), >= v_stall + 3 m/s
-    "max_velocity": 25.0,       # highest level-flight speed [m/s]; RFP: >= 25
+    "cruise_speed": np.arange(11, 26),  # climb + 4 cruise laps [m/s]; RFP: whole number
+    # (14.0 ok, 14.5 not allowed), >= v_stall + 3 m/s
+    "max_velocity": 25.0,  # highest level-flight speed [m/s]; RFP: >= 25
     # --- wing (Aerodynamics) ---
-    "wing_span": 1.8,           # tip to tip [m]; RFP: <= 2.0
-    "wing_area": 0.40,          # wing reference area [m^2]
-    "wing_taper_ratio": 0.6,    # tip chord / root chord [-]
+    "wing_span": 1.8,  # tip to tip [m]; RFP: <= 2.0
+    "wing_area": 0.40,  # wing reference area [m^2]
+    "wing_taper_ratio": 0.6,  # tip chord / root chord [-]
     # --- components (Propulsion) ---
-    "battery": "3S_2200_20C",   # key of init.batteries (text)
-    "motor": "A30-22S",         # key of init.motors (text)
-    "propeller": "APC_9x6",     # key of init.propellers (text)
+    "battery": "3S_2200_20C",  # key of init.batteries (text)
+    "motor": "A30-22S",  # key of init.motors (text)
+    "propeller": "APC_9x6",  # key of init.propellers (text)
 }
 
 '''
@@ -50,6 +55,7 @@ def cruise_speed(design_variables):
     RFP: whole number (14.0 ok, 14.5 not), at least stall speed + 3 m/s."""
     return float(design_variables.get("cruise_speed", 14.0))
 '''
+
 
 # Use if cruise speed is an array.
 def cruise_speed(design_variables):

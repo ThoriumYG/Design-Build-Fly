@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 from copy import deepcopy as dc
 import xml.etree.ElementTree as ET
-from scipy.integrate import quad 
+from scipy.integrate import quad
 
 import sys
 from pathlib import Path
@@ -15,8 +15,10 @@ import initializations
 
 
 def superellipse_tapered(ellipticity, root_chord, half_span, taper_ratio, coordinate):
-    split_ratio = (1 - taper_ratio ** ellipticity) ** (1. / ellipticity)
-    l = (1 - (np.abs(coordinate) / half_span * split_ratio) ** ellipticity) ** (1. / ellipticity) * root_chord
+    split_ratio = (1 - taper_ratio**ellipticity) ** (1.0 / ellipticity)
+    l = (1 - (np.abs(coordinate) / half_span * split_ratio) ** ellipticity) ** (
+        1.0 / ellipticity
+    ) * root_chord
     return l
 
 
@@ -45,24 +47,28 @@ def superellipse_tapered(ellipticity, root_chord, half_span, taper_ratio, coordi
 
 class WingObject(object):
     def __init__(
-            self,
-            name: str, # wing name
-            root_chord: float,  # root chord in [m]
-            wing_span: float,  # wing span in [m]
-            taper_ratio: float, # taper ratio
-            ellipticity: float | int,  # ellipticity of wing (2 means perfect ellipse, 1 results in straight taper)
-            n_panels: int,  # number of panels/positions. higher number means more accuracy, but also more calculation time in XFLR5
-            dihedral: float | int = 0,  # dihedral in degree (must be 0 for the wing)
-            tip_twist: float | int = 0, # tip twist / washout of wing, needed to adjust lift distribution in [°]
-            spar_position: float | int = 25,  # relative spar position in [%]
-            vtp: bool = False,  # flag if wing object is vertical tailplane
-            NACA: int | str = '0008',  # NACA airfoil definition as string or as number
-            x_panels: int | None = None, # number of panels in chord positions
+        self,
+        name: str,  # wing name
+        root_chord: float,  # root chord in [m]
+        wing_span: float,  # wing span in [m]
+        taper_ratio: float,  # taper ratio
+        ellipticity: (
+            float | int
+        ),  # ellipticity of wing (2 means perfect ellipse, 1 results in straight taper)
+        n_panels: int,  # number of panels/positions. higher number means more accuracy, but also more calculation time in XFLR5
+        dihedral: float | int = 0,  # dihedral in degree (must be 0 for the wing)
+        tip_twist: (
+            float | int
+        ) = 0,  # tip twist / washout of wing, needed to adjust lift distribution in [°]
+        spar_position: float | int = 25,  # relative spar position in [%]
+        vtp: bool = False,  # flag if wing object is vertical tailplane
+        NACA: int | str = "0008",  # NACA airfoil definition as string or as number
+        x_panels: int | None = None,  # number of panels in chord positions
     ):
         self.name = name
         self.root_chord = root_chord
         self.wing_span = wing_span
-        self.projected_half_span = self.wing_span/2.
+        self.projected_half_span = self.wing_span / 2.0
         self.taper_ratio = max(0.05, taper_ratio)
         self.ellipticity = ellipticity
         self.n_panels = n_panels
@@ -71,24 +77,29 @@ class WingObject(object):
         self.x_panels = max(5, x_panels)
         self.dihedral = float(dihedral)
         self.tip_twist = float(tip_twist)
-        self.spar_position = float(spar_position)/100.
+        self.spar_position = float(spar_position) / 100.0
         self.vtp = vtp
         if self.vtp:
-            self.projected_half_span *= 2.
+            self.projected_half_span *= 2.0
         self.geometric_half_span = self.projected_half_span / np.cos(self.dihedral_rad())
         if isinstance(NACA, int):
-            NACA = '%04i' % NACA
+            NACA = "%04i" % NACA
         if len(NACA) > 4:
             NACA = NACA[:4]
         elif len(NACA) < 4:
-            NACA = (4-len(NACA))*'0' + NACA
+            NACA = (4 - len(NACA)) * "0" + NACA
         self.NACA = NACA
 
-        self.cmac = 2/3 * self.root_chord *(1+self.taper_ratio+self.taper_ratio**2)/(1+self.taper_ratio)
+        self.cmac = (
+            2
+            / 3
+            * self.root_chord
+            * (1 + self.taper_ratio + self.taper_ratio**2)
+            / (1 + self.taper_ratio)
+        )
 
         """ self.table = pd.DataFrame()
         self.create_table() """
-
 
     def dihedral_rad(self):
         return np.deg2rad(self.dihedral)
@@ -100,13 +111,11 @@ class WingObject(object):
 
     def area(self):
         """Wing reference area: S = 2 * integral of c(y) dy over the half-span."""
-        integral, _ = quad(self.chord, 0.0, 1.0)   # integral of c over non dimensional eta
-        return self.wing_span * integral                 # 2 * (b/2) * integral
+        integral, _ = quad(self.chord, 0.0, 1.0)  # integral of c over non dimensional eta
+        return self.wing_span * integral  # 2 * (b/2) * integral
 
     def aspect_ratio(self):
         return self.wing_span**2 / self.area()
-
-
 
     """ def create_table(self):
         y = y_positions(self.n_panels,) * self.projected_half_span
@@ -186,50 +195,54 @@ class WingObject(object):
 
 
 class Wing(WingObject):
-    def __init__(self,*args,**kwargs):
-        kwargs.update({
-            'name': 'wing',
-            'dihedral': 0,
-            'vtp': False,
-
-        })
+    def __init__(self, *args, **kwargs):
+        kwargs.update(
+            {
+                "name": "wing",
+                "dihedral": 0,
+                "vtp": False,
+            }
+        )
         super().__init__(*args, **kwargs)
 
 
 class HTP(WingObject):
-    def __init__(self,*args,**kwargs):
-        kwargs.update({
-            'name': 'htp',
-            'dihedral': 0,
-            'vtp': False,
-            'tip_twist': 0,
-
-        })
+    def __init__(self, *args, **kwargs):
+        kwargs.update(
+            {
+                "name": "htp",
+                "dihedral": 0,
+                "vtp": False,
+                "tip_twist": 0,
+            }
+        )
         super().__init__(*args, **kwargs)
 
 
 class VTP(WingObject):
-    def __init__(self,*args,**kwargs):
-        kwargs.update({
-            'name': 'vtp',
-            'dihedral': 0,
-            'vtp': True,
-            'tip_twist': 0,
-
-        })
+    def __init__(self, *args, **kwargs):
+        kwargs.update(
+            {
+                "name": "vtp",
+                "dihedral": 0,
+                "vtp": True,
+                "tip_twist": 0,
+            }
+        )
         super().__init__(*args, **kwargs)
 
 
 class VTail(WingObject):
-    def __init__(self,*args,**kwargs):
-        kwargs.update({
-            'name': 'VTail',
-            'vtp': False,
-            'tip_twist': 0,
-
-        })
+    def __init__(self, *args, **kwargs):
+        kwargs.update(
+            {
+                "name": "VTail",
+                "vtp": False,
+                "tip_twist": 0,
+            }
+        )
         super().__init__(*args, **kwargs)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pass

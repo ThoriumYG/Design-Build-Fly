@@ -24,8 +24,13 @@ import sys
 import numpy as np
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")  # repo root
-sys.path.extend([ROOT] + [os.path.join(ROOT, folder) for folder in
-                          ("Aerodynamics", "Structure", "Propulsion", "Performance")])
+sys.path.extend(
+    [ROOT]
+    + [
+        os.path.join(ROOT, folder)
+        for folder in ("Aerodynamics", "Structure", "Propulsion", "Performance")
+    ]
+)
 import initializations as init
 import overall_inputs
 import aerodynamics
@@ -39,7 +44,7 @@ import structures
 def drag_force(m, S, v, polar, rho, load_factor=1.0):
     """Drag [N] in steady flight. load_factor > 1 in turns."""
     CL = 2 * load_factor * m * init.g / (rho * v**2 * S)  # lift = weight * n
-    CD = np.interp(CL, polar[0], polar[1])                # read CD from polar
+    CD = np.interp(CL, polar[0], polar[1])  # read CD from polar
     return 0.5 * rho * v**2 * S * CD
 
 
@@ -57,7 +62,7 @@ def battery_current(P, battery):
     s, Q, C = battery[0], battery[1], battery[2]
     R_i = (init.k_Ri_1 * C + init.k_Ri_2) / (C * Q / 3600)  # cell resistance, Q in Ah
     a, b = s * R_i, -s * init.U0_cell
-    return (-b - math.sqrt(b**2 - 4 * a * P)) / (2 * a)    # smaller root = real one
+    return (-b - math.sqrt(b**2 - 4 * a * P)) / (2 * a)  # smaller root = real one
 
 
 # ============================================================================
@@ -65,12 +70,12 @@ def battery_current(P, battery):
 # ============================================================================
 def takeoff(m, S, CL_max, T_max, polar, rho, battery, power):
     """Ground roll at full thrust until lift-off speed (1.2 * stall speed)."""
-    mu_grass = 0.08                                   # rolling friction, short grass
+    mu_grass = 0.08  # rolling friction, short grass
     v_liftoff = 1.2 * math.sqrt(2 * m * init.g / (rho * S * CL_max))
-    CD_roll = np.interp(0.3, polar[0], polar[1])      # CL ~ 0.3 while on the wheels
+    CD_roll = np.interp(0.3, polar[0], polar[1])  # CL ~ 0.3 while on the wheels
 
     v, t, dt = 0.0, 0.0, 0.01
-    while v < v_liftoff:                              # step through the ground roll
+    while v < v_liftoff:  # step through the ground roll
         drag = 0.5 * rho * v**2 * S * CD_roll
         acceleration = (T_max - drag - mu_grass * m * init.g) / m
         v += acceleration * dt
@@ -85,7 +90,7 @@ def climb(m, S, v, polar, rho, battery, power):
     """Climb to 70 m with 2 m/s vertical speed: thrust = drag + weight * sin(angle)."""
     angle = math.asin(init.vz_climb / v)
     thrust = drag_force(m, S, v, polar, rho) + m * init.g * math.sin(angle)
-    t = init.h_cruise / init.vz_climb                 # 70 m / 2 m/s = 35 s
+    t = init.h_cruise / init.vz_climb  # 70 m / 2 m/s = 35 s
     I = battery_current(power(thrust, v), battery)
     return t, I * t
 
@@ -104,16 +109,18 @@ def pattern_lap(m, S, v, straight, radius, polar, rho, battery, power):
 
 def cruise(m, S, v, polar, rho, battery, power):
     """4 laps of the cruise pattern (4 * 891 m = 3565 m, RFP: approx. 3570 m)."""
-    t_lap, q_lap = pattern_lap(m, S, v, init.l_cruise_straight, init.r_cruise_turn,
-                               polar, rho, battery, power)
+    t_lap, q_lap = pattern_lap(
+        m, S, v, init.l_cruise_straight, init.r_cruise_turn, polar, rho, battery, power
+    )
     return init.n_laps * t_lap, init.n_laps * q_lap
 
 
 def recon(m, S, charge_left, polar, rho, battery, power):
     """Fly the recon pattern at 20 m/s until the remaining charge is used."""
-    t_lap, q_lap = pattern_lap(m, S, init.v_recon, init.l_recon_straight,
-                               init.r_recon_turn, polar, rho, battery, power)
-    t = charge_left / (q_lap / t_lap)                 # remaining charge / average current
+    t_lap, q_lap = pattern_lap(
+        m, S, init.v_recon, init.l_recon_straight, init.r_recon_turn, polar, rho, battery, power
+    )
+    t = charge_left / (q_lap / t_lap)  # remaining charge / average current
     return t, charge_left
 
 
@@ -134,26 +141,30 @@ def mission_time(design_variables, verbose=False):
     v_cruise = overall_inputs.cruise_speed(dv)
     rho = overall_inputs.air_density(dv)
 
-    def power(T, v):                                  # battery power [W] for thrust T at speed v
+    def power(T, v):  # battery power [W] for thrust T at speed v
         return propulsion.battery_power_over_thrust(dv, T, v)
 
     # --- fly the mission ---
-    charge_budget = init.battery_use * battery[1]     # 70 % of capacity [A s]
+    charge_budget = init.battery_use * battery[1]  # 70 % of capacity [A s]
 
     t_to, q_to = takeoff(m, S, CL_max, T_max, polar, rho, battery, power)
     t_cl, q_cl = climb(m, S, v_cruise, polar, rho, battery, power)
     t_cr, q_cr = cruise(m, S, v_cruise, polar, rho, battery, power)
 
     charge_left = charge_budget - (q_to + q_cl + q_cr)
-    if charge_left <= 0:                              # 70 % used before the recon starts
-        T_mission, q_re = 0.0, 0.0                    # -> design not valid
+    if charge_left <= 0:  # 70 % used before the recon starts
+        T_mission, q_re = 0.0, 0.0  # -> design not valid
     else:
         T_mission, q_re = recon(m, S, charge_left, polar, rho, battery, power)
 
     if verbose:
         print(f"{'phase':<10}{'time [s]':>10}{'charge [mAh]':>14}")
-        for name, t, q in [("take-off", t_to, q_to), ("climb", t_cl, q_cl),
-                           ("cruise", t_cr, q_cr), ("recon", T_mission, q_re)]:
+        for name, t, q in [
+            ("take-off", t_to, q_to),
+            ("climb", t_cl, q_cl),
+            ("cruise", t_cr, q_cr),
+            ("recon", T_mission, q_re),
+        ]:
             print(f"{name:<10}{t:10.1f}{q / 3.6:14.0f}")
         print(f"T_mission = {T_mission:.0f} s ({T_mission / 60:.1f} min)")
 

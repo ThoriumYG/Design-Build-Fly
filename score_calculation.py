@@ -1,14 +1,15 @@
 """
-    Inputs:
-    - Aircraft Mass
-    - CL_max
-    - Wing Area
-    - Max Thrust
-    - t_mission
-    - cost
-    Output:
-    - Score
+Inputs:
+- Aircraft Mass
+- CL_max
+- Wing Area
+- Max Thrust
+- t_mission
+- cost
+Output:
+- Score
 """
+
 import numpy as np
 import mission_sim as msim
 import initializations as init
@@ -29,6 +30,7 @@ def calc_d_to(m, cl_max, wing_area, max_thrust, cd_0, AR):
     print(f"d_to = {d_to:.3f} m")
     return d_to
 """
+
 
 def calc_score(t_mission, cost, v_stall, d_to, verbose=False):
     f_stall = 1 / (1 + np.exp(6 * (v_stall - 9.5)))

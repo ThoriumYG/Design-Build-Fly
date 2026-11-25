@@ -12,12 +12,14 @@ Simulates the mission for a given configuration and returns T_mission.
 5. Pick best cruise speed for current config (= max T_mission).
 6. Return T_mission.
 """
+
 from Performance import overall_inputs
 from Performance import mission_phases as phases
 from Aerodynamics import aerodynamics
 from Structure import structures
 from Propulsion import propulsion
 import initializations as init
+
 
 def mission_sim(design_variables, verbose=False):
     """Simulate the whole mission and return T_mission [s]."""
@@ -33,11 +35,11 @@ def mission_sim(design_variables, verbose=False):
     v_cruise = overall_inputs.cruise_speed(dv)
     rho = overall_inputs.air_density(dv)
 
-    def power(T, v):                                  # battery power [W] for thrust T at speed v
+    def power(T, v):  # battery power [W] for thrust T at speed v
         return propulsion.battery_power_over_thrust(dv, T, v)
 
     # Mission
-    charge_budget = init.battery_use * battery[1]     # 70 % of capacity [A s]
+    charge_budget = init.battery_use * battery[1]  # 70 % of capacity [A s]
 
     # Takeoff
     t_to, d_to, q_to = phases.takeoff(m, S, CL_max, T_max, polar, battery)
@@ -53,8 +55,8 @@ def mission_sim(design_variables, verbose=False):
 
         # Check if enough charge available before going into reconnaissance
         charge_left = charge_budget - (q_to + q_cl + q_cr)
-        if charge_left <= 0:                              # 70 % used before the recon starts
-            T_mission, q_re = 0.0, 0.0                    # -> design not valid
+        if charge_left <= 0:  # 70 % used before the recon starts
+            T_mission, q_re = 0.0, 0.0  # -> design not valid
         else:
             # Reconnaissance
             T_mission, q_re = phases.recon(m, S, charge_left, polar, battery, power)
@@ -63,13 +65,19 @@ def mission_sim(design_variables, verbose=False):
         if T_mission > max_T_mission:
             max_T_mission = T_mission
             v_cruise_max_T = v_c
-    
+
     if verbose:
         print(f"{'phase':<10}{'time [s]':>10}{'charge [mAh]':>14}")
-        for name, t, q in [("take-off", t_to, q_to), ("climb", t_cl, q_cl),
-                           ("cruise", t_cr, q_cr), ("recon", max_T_mission, q_re)]:
+        for name, t, q in [
+            ("take-off", t_to, q_to),
+            ("climb", t_cl, q_cl),
+            ("cruise", t_cr, q_cr),
+            ("recon", max_T_mission, q_re),
+        ]:
             print(f"{name:<10}{t:10.1f}{q / 3.6:14.0f}")
-        print(f"T_mission = {max_T_mission:.0f} s ({max_T_mission / 60:.1f} min) at v_cruise = {v_cruise_max_T} m/s")
+        print(
+            f"T_mission = {max_T_mission:.0f} s ({max_T_mission / 60:.1f} min) at v_cruise = {v_cruise_max_T} m/s"
+        )
 
     return T_mission, d_to
 

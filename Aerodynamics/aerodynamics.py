@@ -38,8 +38,13 @@ import sys
 import numpy as np
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")  # repo root
-sys.path.extend([ROOT] + [os.path.join(ROOT, folder) for folder in
-                          ("Aerodynamics", "Structure", "Propulsion", "Performance")])
+sys.path.extend(
+    [ROOT]
+    + [
+        os.path.join(ROOT, folder)
+        for folder in ("Aerodynamics", "Structure", "Propulsion", "Performance")
+    ]
+)
 import initializations as init
 import overall_inputs
 import structures
@@ -83,9 +88,14 @@ def wing_planform(design_variables):
     span = float(design_variables.get("wing_span", 1.8))
     taper = float(design_variables.get("wing_taper_ratio", 0.6))
     inner_chord = 2.0 * wing_area(design_variables) / (span * (1.0 + taper))
-    return {"wing_span": span, "wing_inner_chord": inner_chord,
-            "wing_taper_ratio": taper, "wing_NACA": 2412,
-            "wing_washout": init.washout_tip_max, "wing_spar_pos": 0.25}
+    return {
+        "wing_span": span,
+        "wing_inner_chord": inner_chord,
+        "wing_taper_ratio": taper,
+        "wing_NACA": 2412,
+        "wing_washout": init.washout_tip_max,
+        "wing_spar_pos": 0.25,
+    }
 
 
 def lift_dist_stall_speed(design_variables):
@@ -111,10 +121,8 @@ def static_margin(design_variables):
     """Static margin [-] (0.18 = 18 %). RFP: must be >= 0.18.
     SM = (x_NP - x_CG) / c_mac, with x_CG from Structures."""
     planform = wing_planform(design_variables)
-    c_mac = mean_aerodynamic_chord(planform["wing_inner_chord"],
-                                   planform["wing_taper_ratio"])
-    return (NP_position(design_variables)
-            - structures.CG_position(design_variables)) / c_mac
+    c_mac = mean_aerodynamic_chord(planform["wing_inner_chord"], planform["wing_taper_ratio"])
+    return (NP_position(design_variables) - structures.CG_position(design_variables)) / c_mac
 
 
 # ============================================================================

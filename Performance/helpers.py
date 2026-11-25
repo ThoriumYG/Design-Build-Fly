@@ -7,10 +7,11 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import initializations as init
 
+
 def drag_force(m, S, v, polar, rho, load_factor=1.0):
     """Drag [N] in steady flight. load_factor > 1 in turns."""
     CL = 2 * load_factor * m * init.g / (rho * v**2 * S)  # lift = weight * n
-    CD = np.interp(CL, polar[0], polar[1])                # read CD from polar
+    CD = np.interp(CL, polar[0], polar[1])  # read CD from polar
     return 0.5 * rho * v**2 * S * CD
 
 
@@ -30,4 +31,4 @@ def battery_current(P, battery):
     s, Q, C = battery[0], battery[1], battery[2]
     R_i = (init.k_Ri_1 * C + init.k_Ri_2) / (C * Q / 3600)  # cell resistance, Q in Ah
     a, b = s * R_i, -s * init.U0_cell
-    return (-b - math.sqrt(b**2 - 4 * a * P)) / (2 * a)    # smaller root = real one
+    return (-b - math.sqrt(b**2 - 4 * a * P)) / (2 * a)  # smaller root = real one
