@@ -1,4 +1,4 @@
-from math import pi, sqrt, log10, cos, radians
+from math import cos, log10, pi, sqrt
 
 
 def basic_values(b, Sref, ctip, croot):

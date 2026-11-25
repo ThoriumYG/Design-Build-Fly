@@ -4,11 +4,11 @@ mission_phases.py
 Calculates mission phases and charge consumed during.
 """
 
-import numpy as np
 import math
-
-import sys
 import os
+import sys
+
+import numpy as np
 
 from Performance import helpers
 

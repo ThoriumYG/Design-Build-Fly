@@ -1,17 +1,12 @@
-import numpy as np
-import pandas as pd
-from copy import deepcopy as dc
-import xml.etree.ElementTree as ET
-from scipy.integrate import quad
-
 import sys
 from pathlib import Path
+
+import numpy as np
+from scipy.integrate import quad
 
 # Get the parent directory of the current script
 parent_dir = Path(__file__).resolve().parent.parent
 sys.path.append(str(parent_dir))
-
-import initializations
 
 
 def superellipse_tapered(ellipticity, root_chord, half_span, taper_ratio, coordinate):
@@ -45,7 +40,7 @@ def superellipse_tapered(ellipticity, root_chord, half_span, taper_ratio, coordi
     return y """
 
 
-class WingObject(object):
+class WingObject:
     def __init__(
         self,
         name: str,  # wing name
@@ -53,14 +48,14 @@ class WingObject(object):
         wing_span: float,  # wing span in [m]
         taper_ratio: float,  # taper ratio
         ellipticity: (
-            float | int
+            float
         ),  # ellipticity of wing (2 means perfect ellipse, 1 results in straight taper)
         n_panels: int,  # number of panels/positions. higher number means more accuracy, but also more calculation time in XFLR5
-        dihedral: float | int = 0,  # dihedral in degree (must be 0 for the wing)
+        dihedral: float = 0,  # dihedral in degree (must be 0 for the wing)
         tip_twist: (
-            float | int
+            float
         ) = 0,  # tip twist / washout of wing, needed to adjust lift distribution in [°]
-        spar_position: float | int = 25,  # relative spar position in [%]
+        spar_position: float = 25,  # relative spar position in [%]
         vtp: bool = False,  # flag if wing object is vertical tailplane
         NACA: int | str = "0008",  # NACA airfoil definition as string or as number
         x_panels: int | None = None,  # number of panels in chord positions
@@ -83,7 +78,7 @@ class WingObject(object):
             self.projected_half_span *= 2.0
         self.geometric_half_span = self.projected_half_span / np.cos(self.dihedral_rad())
         if isinstance(NACA, int):
-            NACA = "%04i" % NACA
+            NACA = f"{NACA:04d}"
         if len(NACA) > 4:
             NACA = NACA[:4]
         elif len(NACA) < 4:

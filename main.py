@@ -2,6 +2,5 @@
 
 from Analysis_and_Optimization import wingspan_analysis
 
-
 if __name__ == "__main__":
     wingspan_analysis.main()

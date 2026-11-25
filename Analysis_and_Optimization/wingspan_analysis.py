@@ -59,8 +59,13 @@ def plot_scores(spans, scores):
 
     fig, ax = plt.subplots()
     ax.plot(spans, scores, "o-")
-    ax.plot(spans[i_best], scores[i_best], "r*", markersize=14,
-            label=f"best: b = {spans[i_best]:.2f} m, score = {scores[i_best]:.2f}")
+    ax.plot(
+        spans[i_best],
+        scores[i_best],
+        "r*",
+        markersize=14,
+        label=f"best: b = {spans[i_best]:.2f} m, score = {scores[i_best]:.2f}",
+    )
     ax.set_xlabel("Wing span b [m]")
     ax.set_ylabel("Score [-]")
     ax.set_title("Score vs. wing span")

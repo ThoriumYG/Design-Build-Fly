@@ -13,11 +13,11 @@ Simulates the mission for a given configuration and returns T_mission.
 6. Return T_mission.
 """
 
-from Performance import mission_phases as phases
-from Aerodynamics import aerodynamics
-from Structure import structures
-from Propulsion import propulsion
 import initializations as init
+from Aerodynamics import aerodynamics
+from Performance import mission_phases as phases
+from Propulsion import propulsion
+from Structure import structures
 
 
 def mission_sim(design_variables, verbose=False):

@@ -11,8 +11,8 @@ Output:
 """
 
 import numpy as np
+
 from Performance import mission_sim as msim
-import initializations as init
 
 """
 def calc_d_to(m, cl_max, wing_area, max_thrust, cd_0, AR):
