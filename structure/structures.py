@@ -30,19 +30,7 @@ bending without CFRP), torsion at tip <= 4 deg at 25 m/s.
 Units: SI (m, kg, s, N, Pa, rad).
 """
 
-import os
-import sys
-
 import numpy as np
-
-ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")  # repo root
-sys.path.extend(
-    [ROOT]
-    + [
-        os.path.join(ROOT, folder)
-        for folder in ("Aerodynamics", "Structure", "Propulsion", "Performance")
-    ]
-)
 
 import initializations as init
 

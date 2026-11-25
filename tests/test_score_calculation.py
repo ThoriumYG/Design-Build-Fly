@@ -4,9 +4,9 @@ project (run with `python -m pytest` from the repo root). Replace or extend
 them with real checks once the team functions are implemented.
 """
 
-from Analysis_and_Optimization.baseline_design import BASELINE_DESIGN
-from Performance import mission_sim
-from Performance.score_calculation import calc_score
+from analysis_and_optimization.baseline_design import BASELINE_DESIGN
+from performance import mission_sim
+from performance.score_calculation import calc_score
 
 
 def test_calc_score_increases_with_mission_time():

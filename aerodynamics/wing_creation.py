@@ -1,12 +1,5 @@
-import sys
-from pathlib import Path
-
 import numpy as np
 from scipy.integrate import quad
-
-# Get the parent directory of the current script
-parent_dir = Path(__file__).resolve().parent.parent
-sys.path.append(str(parent_dir))
 
 
 def superellipse_tapered(ellipticity, root_chord, half_span, taper_ratio, coordinate):

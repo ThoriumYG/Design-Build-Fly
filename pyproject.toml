@@ -22,7 +22,7 @@ dev = [
 ]
 
 [tool.setuptools]
-packages = ["Aerodynamics", "Performance", "Propulsion", "Structure", "Analysis_and_Optimization"]
+packages = ["aerodynamics", "performance", "propulsion", "structure", "analysis_and_optimization"]
 py-modules = ["initializations"]
 
 [tool.pytest.ini_options]

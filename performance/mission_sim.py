@@ -14,10 +14,10 @@ Simulates the mission for a given configuration and returns T_mission.
 """
 
 import initializations as init
-from Aerodynamics import aerodynamics
-from Performance import mission_phases as phases
-from Propulsion import propulsion
-from Structure import structures
+from aerodynamics import aerodynamics
+from performance import mission_phases as phases
+from propulsion import propulsion
+from structure import structures
 
 
 def mission_sim(design_variables, verbose=False):
@@ -82,6 +82,6 @@ def mission_sim(design_variables, verbose=False):
 
 # Test run with the placeholder values of the team files
 if __name__ == "__main__":
-    from Analysis_and_Optimization.baseline_design import BASELINE_DESIGN
+    from analysis_and_optimization.baseline_design import BASELINE_DESIGN
 
     mission_sim(BASELINE_DESIGN, verbose=True)

@@ -1,17 +1,9 @@
-import sys
-from pathlib import Path
-
 import matplotlib.pyplot as plt
 import numpy as np
-from wing_creation import VTail, Wing
-
-# Get the parent directory of the current script
-parent_dir = Path(__file__).resolve().parent.parent
-sys.path.append(str(parent_dir))
-
-import drag_estimation
 
 import initializations
+from aerodynamics import drag_estimation
+from aerodynamics.wing_creation import VTail, Wing
 
 
 def wing_CL_alpha(wing_obj):

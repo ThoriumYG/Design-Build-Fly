@@ -33,24 +33,14 @@ the program runs; NotImplementedError = not done yet, nobody can use it.
 """
 
 import math
-import os
-import sys
 
 try:
     import numpy as np
 except ImportError:
     np = None
 
-ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")  # repo root
-sys.path.extend(
-    [ROOT]
-    + [
-        os.path.join(ROOT, folder)
-        for folder in ("Aerodynamics", "Structure", "Propulsion", "Performance")
-    ]
-)
 import initializations as init
-from Structure import structures
+from structure import structures
 
 
 # ============================================================================

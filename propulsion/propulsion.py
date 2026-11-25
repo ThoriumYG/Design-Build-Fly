@@ -32,17 +32,7 @@ init.motors, init.batteries). Units: SI (N, m/s, W, V, A, rad/s).
 """
 
 import math
-import os
-import sys
 
-ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")  # repo root
-sys.path.extend(
-    [ROOT]
-    + [
-        os.path.join(ROOT, folder)
-        for folder in ("Aerodynamics", "Structure", "Propulsion", "Performance")
-    ]
-)
 import initializations as init
 
 

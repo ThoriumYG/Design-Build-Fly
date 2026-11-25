@@ -5,16 +5,11 @@ Calculates mission phases and charge consumed during.
 """
 
 import math
-import os
-import sys
 
 import numpy as np
 
-from Performance import helpers
-
-# Go up one level from the subfolder to the main folder
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import initializations as init
+from performance import helpers
 
 
 def takeoff(
