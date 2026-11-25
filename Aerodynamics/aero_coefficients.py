@@ -70,12 +70,13 @@ def zero_lift_drag(wing_obj, tail_obj):
 if __name__ == '__main__':
 
     # Create Wing and Tail
-    wing = Wing(root_chord=0.2, wing_span=2.0, taper_ratio=0.2, ellipticity=2.5, n_panels=2,
+    wing = Wing(root_chord=0.2, wing_span=2.0, taper_ratio=0.2, ellipticity=2.5, n_panels=10,
         spar_position=25, tip_twist=-3, NACA=2410, )
 
     #wing.to_XFLR5()
+    print(wing.area())
 
-    vtail = VTail(root_chord=0.1, wing_span=0.3, taper_ratio=0.1, ellipticity=1.5, n_panels=20,
+    vtail = VTail(root_chord=0.1, wing_span=0.3, taper_ratio=0.1, ellipticity=1.5, n_panels=10,
         spar_position=50, dihedral=35, NACA='0008', )
 
     #vtail.to_XFLR5()
@@ -96,7 +97,7 @@ if __name__ == '__main__':
     mission_CD = cd0tot + k * mission_CL**2
     mission_drag = mission_CD * 0.5*initializations.rho*initializations.v_recon*wing.area()
 
-    print(
+    '''print(
         f"cd0 = {cd0tot:.3f}, CL_alpha = {clalpha:.3f}, "
         f"induced drag coefficient k = {k:.3f}, "
         f"wing ref area = {wing.area():.3f} m^2"
@@ -110,4 +111,4 @@ if __name__ == '__main__':
     plt.xlabel(r"$C_D$")
     plt.title("Drag polar")
     plt.grid(True)
-    plt.show()
+    plt.show()'''
