@@ -10,6 +10,7 @@ readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
     "numpy>=2.0",
+    "matplotlib>=3.8",
 ]
 
 [project.optional-dependencies]
@@ -21,7 +22,7 @@ dev = [
 ]
 
 [tool.setuptools]
-packages = ["Aerodynamics", "Performance", "Propulsion", "Structure"]
+packages = ["Aerodynamics", "Performance", "Propulsion", "Structure", "Analysis_and_Optimization"]
 py-modules = ["initializations", "overall_inputs"]
 
 [tool.pytest.ini_options]
