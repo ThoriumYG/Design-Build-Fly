@@ -1,0 +1,285 @@
+<?xml version='1.0' encoding='utf-8'?>
+<explane version="1.0">
+   <Units>
+      <length_unit_to_meter>1</length_unit_to_meter>
+      <mass_unit_to_kg>1</mass_unit_to_kg>
+   </Units>
+   <wing>
+      <Name>VTail</Name>
+      <Sections>
+         <Section>
+            <y_position>0.000000</y_position>
+            <Chord>0.100000</Chord>
+            <xOffset>0.000000</xOffset>
+            <Dihedral>35.000000</Dihedral>
+            <Twist>0.000000</Twist>
+            <x_number_of_panels>5</x_number_of_panels>
+            <x_panel_distribution>COSINE</x_panel_distribution>
+            <y_number_of_panels>1</y_number_of_panels>
+            <y_panel_distribution>UNIFORM</y_panel_distribution>
+            <Left_Side_FoilName>NACA 0008</Left_Side_FoilName>
+            <Right_Side_FoilName>NACA 0008</Right_Side_FoilName>
+         </Section>
+         <Section>
+            <y_position>0.007747</y_position>
+            <Chord>0.099437</Chord>
+            <xOffset>0.000281</xOffset>
+            <Dihedral>35.000000</Dihedral>
+            <Twist>0.000000</Twist>
+            <x_number_of_panels>5</x_number_of_panels>
+            <x_panel_distribution>COSINE</x_panel_distribution>
+            <y_number_of_panels>1</y_number_of_panels>
+            <y_panel_distribution>UNIFORM</y_panel_distribution>
+            <Left_Side_FoilName>NACA 0008</Left_Side_FoilName>
+            <Right_Side_FoilName>NACA 0008</Right_Side_FoilName>
+         </Section>
+         <Section>
+            <y_position>0.016563</y_position>
+            <Chord>0.098236</Chord>
+            <xOffset>0.000882</xOffset>
+            <Dihedral>35.000000</Dihedral>
+            <Twist>0.000000</Twist>
+            <x_number_of_panels>5</x_number_of_panels>
+            <x_panel_distribution>COSINE</x_panel_distribution>
+            <y_number_of_panels>1</y_number_of_panels>
+            <y_panel_distribution>UNIFORM</y_panel_distribution>
+            <Left_Side_FoilName>NACA 0008</Left_Side_FoilName>
+            <Right_Side_FoilName>NACA 0008</Right_Side_FoilName>
+         </Section>
+         <Section>
+            <y_position>0.026363</y_position>
+            <Chord>0.096441</Chord>
+            <xOffset>0.001779</xOffset>
+            <Dihedral>35.000000</Dihedral>
+            <Twist>0.000000</Twist>
+            <x_number_of_panels>5</x_number_of_panels>
+            <x_panel_distribution>COSINE</x_panel_distribution>
+            <y_number_of_panels>1</y_number_of_panels>
+            <y_panel_distribution>UNIFORM</y_panel_distribution>
+            <Left_Side_FoilName>NACA 0008</Left_Side_FoilName>
+            <Right_Side_FoilName>NACA 0008</Right_Side_FoilName>
+         </Section>
+         <Section>
+            <y_position>0.037036</y_position>
+            <Chord>0.094038</Chord>
+            <xOffset>0.002981</xOffset>
+            <Dihedral>35.000000</Dihedral>
+            <Twist>0.000000</Twist>
+            <x_number_of_panels>5</x_number_of_panels>
+            <x_panel_distribution>COSINE</x_panel_distribution>
+            <y_number_of_panels>1</y_number_of_panels>
+            <y_panel_distribution>UNIFORM</y_panel_distribution>
+            <Left_Side_FoilName>NACA 0008</Left_Side_FoilName>
+            <Right_Side_FoilName>NACA 0008</Right_Side_FoilName>
+         </Section>
+         <Section>
+            <y_position>0.048446</y_position>
+            <Chord>0.091010</Chord>
+            <xOffset>0.004495</xOffset>
+            <Dihedral>35.000000</Dihedral>
+            <Twist>0.000000</Twist>
+            <x_number_of_panels>5</x_number_of_panels>
+            <x_panel_distribution>COSINE</x_panel_distribution>
+            <y_number_of_panels>1</y_number_of_panels>
+            <y_panel_distribution>UNIFORM</y_panel_distribution>
+            <Left_Side_FoilName>NACA 0008</Left_Side_FoilName>
+            <Right_Side_FoilName>NACA 0008</Right_Side_FoilName>
+         </Section>
+         <Section>
+            <y_position>0.060437</y_position>
+            <Chord>0.087350</Chord>
+            <xOffset>0.006325</xOffset>
+            <Dihedral>35.000000</Dihedral>
+            <Twist>0.000000</Twist>
+            <x_number_of_panels>5</x_number_of_panels>
+            <x_panel_distribution>COSINE</x_panel_distribution>
+            <y_number_of_panels>1</y_number_of_panels>
+            <y_panel_distribution>UNIFORM</y_panel_distribution>
+            <Left_Side_FoilName>NACA 0008</Left_Side_FoilName>
+            <Right_Side_FoilName>NACA 0008</Right_Side_FoilName>
+         </Section>
+         <Section>
+            <y_position>0.072835</y_position>
+            <Chord>0.083067</Chord>
+            <xOffset>0.008467</xOffset>
+            <Dihedral>35.000000</Dihedral>
+            <Twist>0.000000</Twist>
+            <x_number_of_panels>5</x_number_of_panels>
+            <x_panel_distribution>COSINE</x_panel_distribution>
+            <y_number_of_panels>1</y_number_of_panels>
+            <y_panel_distribution>UNIFORM</y_panel_distribution>
+            <Left_Side_FoilName>NACA 0008</Left_Side_FoilName>
+            <Right_Side_FoilName>NACA 0008</Right_Side_FoilName>
+         </Section>
+         <Section>
+            <y_position>0.085449</y_position>
+            <Chord>0.078184</Chord>
+            <xOffset>0.010908</xOffset>
+            <Dihedral>35.000000</Dihedral>
+            <Twist>0.000000</Twist>
+            <x_number_of_panels>5</x_number_of_panels>
+            <x_panel_distribution>COSINE</x_panel_distribution>
+            <y_number_of_panels>1</y_number_of_panels>
+            <y_panel_distribution>UNIFORM</y_panel_distribution>
+            <Left_Side_FoilName>NACA 0008</Left_Side_FoilName>
+            <Right_Side_FoilName>NACA 0008</Right_Side_FoilName>
+         </Section>
+         <Section>
+            <y_position>0.098080</y_position>
+            <Chord>0.072741</Chord>
+            <xOffset>0.013629</xOffset>
+            <Dihedral>35.000000</Dihedral>
+            <Twist>0.000000</Twist>
+            <x_number_of_panels>5</x_number_of_panels>
+            <x_panel_distribution>COSINE</x_panel_distribution>
+            <y_number_of_panels>1</y_number_of_panels>
+            <y_panel_distribution>UNIFORM</y_panel_distribution>
+            <Left_Side_FoilName>NACA 0008</Left_Side_FoilName>
+            <Right_Side_FoilName>NACA 0008</Right_Side_FoilName>
+         </Section>
+         <Section>
+            <y_position>0.110520</y_position>
+            <Chord>0.066798</Chord>
+            <xOffset>0.016601</xOffset>
+            <Dihedral>35.000000</Dihedral>
+            <Twist>0.000000</Twist>
+            <x_number_of_panels>5</x_number_of_panels>
+            <x_panel_distribution>COSINE</x_panel_distribution>
+            <y_number_of_panels>1</y_number_of_panels>
+            <y_panel_distribution>UNIFORM</y_panel_distribution>
+            <Left_Side_FoilName>NACA 0008</Left_Side_FoilName>
+            <Right_Side_FoilName>NACA 0008</Right_Side_FoilName>
+         </Section>
+         <Section>
+            <y_position>0.122562</y_position>
+            <Chord>0.060428</Chord>
+            <xOffset>0.019786</xOffset>
+            <Dihedral>35.000000</Dihedral>
+            <Twist>0.000000</Twist>
+            <x_number_of_panels>5</x_number_of_panels>
+            <x_panel_distribution>COSINE</x_panel_distribution>
+            <y_number_of_panels>1</y_number_of_panels>
+            <y_panel_distribution>UNIFORM</y_panel_distribution>
+            <Left_Side_FoilName>NACA 0008</Left_Side_FoilName>
+            <Right_Side_FoilName>NACA 0008</Right_Side_FoilName>
+         </Section>
+         <Section>
+            <y_position>0.133998</y_position>
+            <Chord>0.053728</Chord>
+            <xOffset>0.023136</xOffset>
+            <Dihedral>35.000000</Dihedral>
+            <Twist>0.000000</Twist>
+            <x_number_of_panels>5</x_number_of_panels>
+            <x_panel_distribution>COSINE</x_panel_distribution>
+            <y_number_of_panels>1</y_number_of_panels>
+            <y_panel_distribution>UNIFORM</y_panel_distribution>
+            <Left_Side_FoilName>NACA 0008</Left_Side_FoilName>
+            <Right_Side_FoilName>NACA 0008</Right_Side_FoilName>
+         </Section>
+         <Section>
+            <y_position>0.144628</y_position>
+            <Chord>0.046811</Chord>
+            <xOffset>0.026595</xOffset>
+            <Dihedral>35.000000</Dihedral>
+            <Twist>0.000000</Twist>
+            <x_number_of_panels>5</x_number_of_panels>
+            <x_panel_distribution>COSINE</x_panel_distribution>
+            <y_number_of_panels>1</y_number_of_panels>
+            <y_panel_distribution>UNIFORM</y_panel_distribution>
+            <Left_Side_FoilName>NACA 0008</Left_Side_FoilName>
+            <Right_Side_FoilName>NACA 0008</Right_Side_FoilName>
+         </Section>
+         <Section>
+            <y_position>0.154266</y_position>
+            <Chord>0.039813</Chord>
+            <xOffset>0.030094</xOffset>
+            <Dihedral>35.000000</Dihedral>
+            <Twist>0.000000</Twist>
+            <x_number_of_panels>5</x_number_of_panels>
+            <x_panel_distribution>COSINE</x_panel_distribution>
+            <y_number_of_panels>1</y_number_of_panels>
+            <y_panel_distribution>UNIFORM</y_panel_distribution>
+            <Left_Side_FoilName>NACA 0008</Left_Side_FoilName>
+            <Right_Side_FoilName>NACA 0008</Right_Side_FoilName>
+         </Section>
+         <Section>
+            <y_position>0.162738</y_position>
+            <Chord>0.032897</Chord>
+            <xOffset>0.033551</xOffset>
+            <Dihedral>35.000000</Dihedral>
+            <Twist>0.000000</Twist>
+            <x_number_of_panels>5</x_number_of_panels>
+            <x_panel_distribution>COSINE</x_panel_distribution>
+            <y_number_of_panels>1</y_number_of_panels>
+            <y_panel_distribution>UNIFORM</y_panel_distribution>
+            <Left_Side_FoilName>NACA 0008</Left_Side_FoilName>
+            <Right_Side_FoilName>NACA 0008</Right_Side_FoilName>
+         </Section>
+         <Section>
+            <y_position>0.169892</y_position>
+            <Chord>0.026265</Chord>
+            <xOffset>0.036868</xOffset>
+            <Dihedral>35.000000</Dihedral>
+            <Twist>0.000000</Twist>
+            <x_number_of_panels>5</x_number_of_panels>
+            <x_panel_distribution>COSINE</x_panel_distribution>
+            <y_number_of_panels>1</y_number_of_panels>
+            <y_panel_distribution>UNIFORM</y_panel_distribution>
+            <Left_Side_FoilName>NACA 0008</Left_Side_FoilName>
+            <Right_Side_FoilName>NACA 0008</Right_Side_FoilName>
+         </Section>
+         <Section>
+            <y_position>0.175597</y_position>
+            <Chord>0.020180</Chord>
+            <xOffset>0.039910</xOffset>
+            <Dihedral>35.000000</Dihedral>
+            <Twist>0.000000</Twist>
+            <x_number_of_panels>5</x_number_of_panels>
+            <x_panel_distribution>COSINE</x_panel_distribution>
+            <y_number_of_panels>1</y_number_of_panels>
+            <y_panel_distribution>UNIFORM</y_panel_distribution>
+            <Left_Side_FoilName>NACA 0008</Left_Side_FoilName>
+            <Right_Side_FoilName>NACA 0008</Right_Side_FoilName>
+         </Section>
+         <Section>
+            <y_position>0.179748</y_position>
+            <Chord>0.015021</Chord>
+            <xOffset>0.042490</xOffset>
+            <Dihedral>35.000000</Dihedral>
+            <Twist>0.000000</Twist>
+            <x_number_of_panels>5</x_number_of_panels>
+            <x_panel_distribution>COSINE</x_panel_distribution>
+            <y_number_of_panels>1</y_number_of_panels>
+            <y_panel_distribution>UNIFORM</y_panel_distribution>
+            <Left_Side_FoilName>NACA 0008</Left_Side_FoilName>
+            <Right_Side_FoilName>NACA 0008</Right_Side_FoilName>
+         </Section>
+         <Section>
+            <y_position>0.182270</y_position>
+            <Chord>0.011367</Chord>
+            <xOffset>0.044316</xOffset>
+            <Dihedral>35.000000</Dihedral>
+            <Twist>0.000000</Twist>
+            <x_number_of_panels>5</x_number_of_panels>
+            <x_panel_distribution>COSINE</x_panel_distribution>
+            <y_number_of_panels>1</y_number_of_panels>
+            <y_panel_distribution>UNIFORM</y_panel_distribution>
+            <Left_Side_FoilName>NACA 0008</Left_Side_FoilName>
+            <Right_Side_FoilName>NACA 0008</Right_Side_FoilName>
+         </Section>
+         <Section>
+            <y_position>0.183116</y_position>
+            <Chord>0.010000</Chord>
+            <xOffset>0.045000</xOffset>
+            <Dihedral>35.000000</Dihedral>
+            <Twist>0.000000</Twist>
+            <x_number_of_panels>5</x_number_of_panels>
+            <x_panel_distribution>COSINE</x_panel_distribution>
+            <y_number_of_panels>1</y_number_of_panels>
+            <y_panel_distribution>UNIFORM</y_panel_distribution>
+            <Left_Side_FoilName>NACA 0008</Left_Side_FoilName>
+            <Right_Side_FoilName>NACA 0008</Right_Side_FoilName>
+         </Section>
+      </Sections>
+   </wing>
+</explane>
