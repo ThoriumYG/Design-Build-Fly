@@ -11,8 +11,9 @@ Main Wing
 import numpy as np
 import initializations
 from aerodynamics import wing_creation
+
 def get_lift_distribution_from_XFLR5():
-  with open("main_wing_data_min.txt", "r", encoding="utf-8") as wing:
+  with open("data/XFLR5/main_wing_data_min.txt", "r", encoding="utf-8") as wing:
       wing_data = wing.read()
   wd1 = wing_data.replace("     ", ",")
   wd2 = wd1.replace("    ", ",")
